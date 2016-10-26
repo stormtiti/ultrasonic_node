@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ultrasonic_multiple)
+project(ultrasonic_node)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -O3")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
 
 find_package(catkin REQUIRED COMPONENTS nav_msgs roscpp tf  rospy std_msgs)
 
@@ -13,9 +14,8 @@ include_directories(
 )
 
 link_directories(
-  ${ultrasonic_multiple_SOURCE_DIR}/libs/
+  ${ultrasonic_node_SOURCE_DIR}/libs/
   /lib/x86_64-linux-gnu/
-  /usr/lib/x86_64-linux-gnu/
 )
 
 ###############################################################

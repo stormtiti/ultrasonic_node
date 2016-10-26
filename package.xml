@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>ultrasonic_multiple</name>
+  <name>ultrasonic_node</name>
   <version>0.2.3</version>
   <description>ultrasonic_multiple</description>
   <maintainer email="william@osrfoundation.org">William Woodall</maintainer>
