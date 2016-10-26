@@ -1,13 +1,23 @@
 #include "usbhid.h"
 #include <pthread.h>
+#include <string.h>
 hid_device *handle;
 void *usbhidRecDataHandle_thread(void* ptr);
 usbHid::usbHid()
 {
     int rc1;
-    m_distanceMax = 500;//unit mm
-    m_distanceMin = 20;//unit mm
-    m_distance = 0;
+    m_distance1_Max = 500;//unit mm
+    m_distance1_Min = 20;//unit mm
+    m_distance1 = 0;
+    m_distance2_Max = 500;//unit mm
+    m_distance2_Min = 20;//unit mm
+    m_distance2 = 0;
+    m_distance3_Max = 500;//unit mm
+    m_distance3_Min = 20;//unit mm
+    m_distance3 = 0;
+    m_distance4_Max = 500;//unit mm
+    m_distance4_Min = 20;//unit mm
+    m_distance4 = 0;
     devs = new struct hid_device_info();
     cur_dev = new struct hid_device_info();
     irecCnt = 0;
@@ -15,22 +25,23 @@ usbHid::usbHid()
     if(hid_init())
     {
 //        return -1;
-        printf("init error");
+        printf("init error \n");
         return;
     }
-    devs = hid_enumerate(0x0, 0x0);
-    cur_dev = devs;
-    while (cur_dev) {
-        printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls", cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
-        printf("\n");
-        printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
-        printf("  Product:      %ls\n", cur_dev->product_string);
-        printf("  Release:      %hx\n", cur_dev->release_number);
-        printf("  Interface:    %d\n",  cur_dev->interface_number);
-        printf("\n");
-        cur_dev = cur_dev->next;
-    }
-    hid_free_enumeration(devs);
+    printf("init usbhid ok\n");
+//    devs = hid_enumerate(0x0, 0x0);
+//    cur_dev = devs;
+//    while (cur_dev) {
+//        printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls", cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
+//        printf("\n");
+//        printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
+//        printf("  Product:      %ls\n", cur_dev->product_string);
+//        printf("  Release:      %hx\n", cur_dev->release_number);
+//        printf("  Interface:    %d\n",  cur_dev->interface_number);
+//        printf("\n");
+//        cur_dev = cur_dev->next;
+//    }
+//    hid_free_enumeration(devs);
 
     // Set up the command buffer.
     memset(buf,0x00,sizeof(buf));
@@ -45,6 +56,10 @@ usbHid::usbHid()
         printf("unable to open device\n");
         perror("unable to open device");
         return;
+    }
+    else
+    {
+    	printf("open usb device success\n");
     }
 
     // Read the Manufacturer String
@@ -135,38 +150,167 @@ usbHid::usbHid()
 	}
 
 }
-
-void usbHid::set_mdistance(unsigned int uiDistance)
+double usbHid::get_mdistance(int index)
 {
-	if((uiDistance > m_distanceMax) || (uiDistance < m_distanceMin))
+	double d_distance;
+	switch(index)
 	{
-		m_distance = 0;
+	case 1:
+		d_distance = m_distance1;
+		break;
+	case 2:
+		d_distance = m_distance2;
+		break;
+	case 3:
+		d_distance = m_distance3;
+		break;
+	case 4:
+		d_distance = m_distance4;
+		break;
+	default:
+		d_distance = 0;
+		break;
 	}
-	else
+	return d_distance;
+}
+
+double usbHid::get_mdistanceMax(int index)
+{
+	double d_distance_Max;
+	switch(index)
 	{
-		m_distance = uiDistance;
+	case 1:
+		d_distance_Max = m_distance1_Max;
+		break;
+	case 2:
+		d_distance_Max = m_distance2_Max;
+		break;
+	case 3:
+		d_distance_Max = m_distance3_Max;
+		break;
+	case 4:
+		d_distance_Max = m_distance4_Max;
+		break;
+	default:
+		d_distance_Max = 0;
+		break;
 	}
+	return d_distance_Max;
+}
+
+
+double usbHid::get_mdistanceMin(int index)
+{
+	double d_distance_Min;
+	switch(index)
+	{
+	case 1:
+		d_distance_Min = m_distance1_Min;
+		break;
+	case 2:
+		d_distance_Min = m_distance2_Min;
+		break;
+	case 3:
+		d_distance_Min = m_distance3_Min;
+		break;
+	case 4:
+		d_distance_Min = m_distance4_Min;
+		break;
+	default:
+		d_distance_Min = 0;
+		break;
+	}
+	return d_distance_Min;
+}
+
+void usbHid::set_mdistance(unsigned int uiDistance, int index)
+{
+	switch(index)
+	{
+	case 1:
+		if((uiDistance > m_distance1_Max) || (uiDistance < m_distance1_Min))
+		{
+			m_distance1 = 0;
+		}
+		else
+		{
+			m_distance1 = uiDistance;
+		}
+		break;
+	case 2:
+		if((uiDistance > m_distance2_Max) || (uiDistance < m_distance2_Min))
+		{
+			m_distance2 = 0;
+		}
+		else
+		{
+			m_distance2 = uiDistance;
+		}
+		break;
+	case 3:
+		if((uiDistance > m_distance3_Max) || (uiDistance < m_distance3_Min))
+		{
+			m_distance3 = 0;
+		}
+		else
+		{
+			m_distance3 = uiDistance;
+		}
+		break;
+	case 4:
+		if((uiDistance > m_distance4_Max) || (uiDistance < m_distance4_Min))
+		{
+			m_distance4 = 0;
+		}
+		else
+		{
+			m_distance4 = uiDistance;
+		}
+		break;
+	default:
+		break;
+	}
+
 }
 
 void *usbhidRecDataHandle_thread(void* ptr)
 {
-    static double dDistanceBak;
-    double dDistanceCur;
+    static double dDistanceBak1,dDistanceBak2,dDistanceBak3,dDistanceBak4;
+    static bool bUsbEnable = true;
+    double dDistanceCur1,dDistanceCur2,dDistanceCur3,dDistanceCur4;
     usbHid *pComm=(usbHid*) ptr;
     printf("usbhidRecDataHandle_thread \n");
-    while(true)
+    while(bUsbEnable)
     {
 		pComm->res = hid_read(handle, pComm->buf, sizeof(pComm->buf));
-		if (pComm->res == 0)
-			printf("waiting...\n");
-		if (pComm->res < 0)
-			printf("Unable to read()\n");
-
-		dDistanceCur = ((pComm->buf[1]*256 + pComm->buf[0]) );
-		if(dDistanceCur != dDistanceBak)
+		if ((pComm->res == 0) || (pComm->res < 0))
 		{
-			 dDistanceBak = dDistanceCur;
-			 pComm->set_mdistance(dDistanceCur);
+			printf("waiting...\n");
+			memset(pComm->buf,0,sizeof(pComm->buf) / sizeof(unsigned char));
+		}
+		dDistanceCur1 = ((pComm->buf[1]*256 + pComm->buf[0]) );
+		dDistanceCur2 = ((pComm->buf[3]*256 + pComm->buf[2]) );
+		dDistanceCur3 = ((pComm->buf[5]*256 + pComm->buf[4]) );
+		dDistanceCur4 = ((pComm->buf[7]*256 + pComm->buf[6]) );
+		if(dDistanceCur1 != dDistanceBak1)
+		{
+			 dDistanceBak1 = dDistanceCur1;
+			 pComm->set_mdistance(dDistanceCur1,1);
+		}
+		if(dDistanceCur2 != dDistanceBak2)
+		{
+			 dDistanceBak2 = dDistanceCur2;
+			 pComm->set_mdistance(dDistanceCur2,2);
+		}
+		if(dDistanceCur3 != dDistanceBak3)
+		{
+			 dDistanceBak3 = dDistanceCur3;
+			 pComm->set_mdistance(dDistanceCur3,3);
+		}
+		if(dDistanceCur4 != dDistanceBak4)
+		{
+			 dDistanceBak4 = dDistanceCur4;
+			 pComm->set_mdistance(dDistanceCur4,4);
 		}
 		for(int i = 0; i < 64; i++)
 		{
@@ -174,7 +318,11 @@ void *usbhidRecDataHandle_thread(void* ptr)
 		}
 		pComm->res = hid_write(handle, pComm->buf, 64);
 		if (pComm->res < 0) {
+			bUsbEnable =  false;
+			hid_close(handle);
+			hid_exit();
 			printf("Unable to write()\n");
+			memset(pComm->buf,0,sizeof(pComm->buf) / sizeof(unsigned char));
 			printf("Error: %ls\n", hid_error(handle));
 		}
 		usleep(1000);//1ms read
@@ -184,6 +332,7 @@ void *usbhidRecDataHandle_thread(void* ptr)
 usbHid::~usbHid()
 {
 
+	printf("hid_close\n");
     hid_close(handle);
 
     /* Free static HIDAPI objects. */

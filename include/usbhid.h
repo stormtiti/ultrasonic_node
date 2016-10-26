@@ -21,10 +21,10 @@ public:
     ~usbHid();
     int res;
     unsigned char buf[256];
-    double get_mdistance(){return m_distance;}
-    double get_mdistanceMax(){return m_distanceMax;}
-    double get_mdistanceMin(){return m_distanceMin;}
-    void set_mdistance(unsigned int uiDistance);
+    double get_mdistance(int index);
+    double get_mdistanceMax(int index);
+    double get_mdistanceMin(int index);
+    void set_mdistance(unsigned int uiDistance,int index);
 private:
 
 
@@ -36,8 +36,17 @@ private:
     int irecCnt;
     int iwriteCnt;
     pthread_t usbhidRec_thread;
-    unsigned int m_distance;
-    unsigned int m_distanceMax;
-    unsigned int m_distanceMin;
+    unsigned int m_distance1;
+    unsigned int m_distance1_Max;
+    unsigned int m_distance1_Min;
+    unsigned int m_distance2;
+    unsigned int m_distance2_Max;
+    unsigned int m_distance2_Min;
+    unsigned int m_distance3;
+    unsigned int m_distance3_Max;
+    unsigned int m_distance3_Min;
+    unsigned int m_distance4;
+    unsigned int m_distance4_Max;
+    unsigned int m_distance4_Min;
 };
 #endif // USBHID_H

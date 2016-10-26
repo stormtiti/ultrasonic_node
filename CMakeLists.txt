@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ultrasonic_node)
+project(ultrasonic_multiple)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -O3")
 
@@ -13,7 +13,7 @@ include_directories(
 )
 
 link_directories(
-  ${ultrasonic_node_SOURCE_DIR}/libs/
+  ${ultrasonic_multiple_SOURCE_DIR}/libs/
   /lib/x86_64-linux-gnu/
   /usr/lib/x86_64-linux-gnu/
 )

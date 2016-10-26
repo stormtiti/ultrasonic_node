@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>ultrasonic_node</name>
+  <name>ultrasonic_multiple</name>
   <version>0.2.3</version>
-  <description>ultrasonic_node</description>
+  <description>ultrasonic_multiple</description>
   <maintainer email="william@osrfoundation.org">William Woodall</maintainer>
   <license>BSD</license>
   <author>Eitan Marder-Eppstein</author>
