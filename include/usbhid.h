@@ -14,6 +14,7 @@
 #define VENDOR_ID  0x1314
 #define PRODUCT_ID 0x1003
 #define MAX_STR 255
+//#define ULTRASONIC_DEBUG
 class usbHid
 {
 
@@ -38,17 +39,12 @@ private:
     int iwriteCnt;
     pthread_t usbhidRec_thread;
     ros::NodeHandle private_nh_;
+    double m_distance_Max;
+    double m_distance_Min;
     double m_distance1;
-    double m_distance1_Max;
-    double m_distance1_Min;
     double m_distance2;
-    double m_distance2_Max;
-    double m_distance2_Min;
     double m_distance3;
-    double m_distance3_Max;
-    double m_distance3_Min;
     double m_distance4;
-    double m_distance4_Max;
-    double m_distance4_Min;
+
 };
 #endif // USBHID_H

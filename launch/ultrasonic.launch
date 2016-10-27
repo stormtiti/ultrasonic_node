@@ -1,12 +1,6 @@
 <launch>
   <node pkg="ultrasonic_node" type="ultrasonic_node" name="ultrasonic_node" output="screen">
-  <param name="ultrasonic_distance1_Max"     	    		  value="0.5" />
-  <param name="ultrasonic_distance1_Min"      		          value="0.02" />
-  <param name="ultrasonic_distance2_Max"     	    		  value="0.5" />
-  <param name="ultrasonic_distance2_Min"      		          value="0.02" />
-  <param name="ultrasonic_distance3_Max"     	    		  value="0.5" />
-  <param name="ultrasonic_distance3_Min"      		          value="0.02" />
-  <param name="ultrasonic_distance4_Max"     	    		  value="0.5" />
-  <param name="ultrasonic_distance4_Min"      		          value="0.02" />
+  <param name="ultrasonic_distance_Max"     	    		  value="0.5" />
+  <param name="ultrasonic_distance_Min"      		          value="0.02" />
   </node>
 </launch>

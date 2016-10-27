@@ -1,10 +1,17 @@
-/*
- * main.cc
+/*******************************************************************************
+ * Copyright(C) Pi2E . All rights reserved 2016
  *
- *  Created on: Sep 12, 2016
- *      Author: root
- */
-// ros header file
+ * @file main.cc
+ *
+ * @brief ultrasonic
+ * 		  1) publish ultrasonic topic
+ *
+ * @author Hyman XI <twlk8634109@126.com>
+ * @version 1.0.0.0
+ * @date oct 27,2016
+ *
+ * Maintained by Hyman XI
+ ***********************************************************************************/
 #include <ros/ros.h>
 #include <geometry_msgs/Pose2D.h>
 #include <nav_msgs/Odometry.h>
@@ -26,7 +33,7 @@ int main(int argc, char **argv){
   ros::Publisher     ultrasonic_pub2 = nh.advertise<sensor_msgs::Range>   ("ultrasonic_msg_2", 50);
   ros::Publisher     ultrasonic_pub3 = nh.advertise<sensor_msgs::Range>   ("ultrasonic_msg_3", 50);
   ros::Publisher     ultrasonic_pub4 = nh.advertise<sensor_msgs::Range>   ("ultrasonic_msg_4", 50);
-  ROS_INFO("[ultrasonic] ultrasonic Initialization ...");
+  ROS_INFO("[Ultrasonic] ultrasonic Initialization ...");
   sleep(1);
   ros::Rate loop_rate(5);
   usbHid myusbhid;
