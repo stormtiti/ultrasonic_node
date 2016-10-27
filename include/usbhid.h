@@ -10,6 +10,7 @@
 #include <libusb-1.0/libusb.h>
 #include "hidapi.h"
 #include <sys/stat.h>
+#include <ros/ros.h>
 #define VENDOR_ID  0x1314
 #define PRODUCT_ID 0x1003
 #define MAX_STR 255
@@ -36,17 +37,18 @@ private:
     int irecCnt;
     int iwriteCnt;
     pthread_t usbhidRec_thread;
-    unsigned int m_distance1;
-    unsigned int m_distance1_Max;
-    unsigned int m_distance1_Min;
-    unsigned int m_distance2;
-    unsigned int m_distance2_Max;
-    unsigned int m_distance2_Min;
-    unsigned int m_distance3;
-    unsigned int m_distance3_Max;
-    unsigned int m_distance3_Min;
-    unsigned int m_distance4;
-    unsigned int m_distance4_Max;
-    unsigned int m_distance4_Min;
+    ros::NodeHandle private_nh_;
+    double m_distance1;
+    double m_distance1_Max;
+    double m_distance1_Min;
+    double m_distance2;
+    double m_distance2_Max;
+    double m_distance2_Min;
+    double m_distance3;
+    double m_distance3_Max;
+    double m_distance3_Min;
+    double m_distance4;
+    double m_distance4_Max;
+    double m_distance4_Min;
 };
 #endif // USBHID_H
